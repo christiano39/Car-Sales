@@ -25,7 +25,13 @@ export const reducer = (state = initialState, action) => {
                     ...state.car,
                     features: [...state.car.features, action.payload]
                 },
-                additionalPrice: state.additionalPrice + action.payload.price
+                additionalPrice: state.additionalPrice + action.payload.price,
+                additionalFeatures: state.additionalFeatures.filter(item => {
+                    if (action.payload.id === item.id){
+                        return false;
+                    }
+                    return true;
+                })
             }
         case REMOVE_FEATURE:
             return {
@@ -39,7 +45,8 @@ export const reducer = (state = initialState, action) => {
                         return true;
                     })
                 },
-                additionalPrice: state.additionalPrice - action.payload.price
+                additionalPrice: state.additionalPrice - action.payload.price,
+                additionalFeatures: [...state.additionalFeatures, action.payload]
             }
         default:
             return state;
